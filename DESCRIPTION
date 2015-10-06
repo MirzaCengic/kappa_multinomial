@@ -1,0 +1,14 @@
+Package: multinomialperform
+Type: Package
+Title: Evaluate the performance of probabilistic multinomial models
+Version: 0.1.0
+Date: 2015-10-10
+Author: Bob Douma and Will Cornwell
+Maintainer: Will Cornwell <wcornwell@gmail.com>
+Description: Performance statistics for multinomial models, especially for land cover models
+Depends: R (>= 3.1.0)
+License: MIT + file LICENSE
+Maintainer: Bob Douma <bob.douma@wur.nl>
+LazyData: true
+Suggests: testthat
+Imports: 
