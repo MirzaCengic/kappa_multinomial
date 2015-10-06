@@ -3,22 +3,22 @@
 \encoding{utf8}
 \name{kappa_multinomial}
 \alias{kappa_multinomial}
-\title{Performance statistics for multinomial models}
+\title{A kappa-like measure for multinomial models}
 \usage{
-kappa_multinomial(i, input, ...)
+kappa_multinomial(x)
 }
 \arguments{
-\item{i}{input, probably should generalize this}
-
-\item{input}{figure out logical structure for this}
-
-\item{...}{Additional arguments passed to ?}
+\item{x}{a list containing data summaries to be used in calculating kappa multinomial. These are usually the result of a call to kappa.multinomial.stats, but can be generated in another fasion.}
 }
 \value{
 returns a list with the following elements:
  \itemize{
-\item{Kappa}
-\item{some other kappa}
+\item{Kappa_prob}
+\item{Kappa_loc}
+\item{Kappa_multinomial}
+\item{p0}
+\item{pe}
+\item{pmax}
 }
 }
 \description{
