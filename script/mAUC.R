@@ -1,5 +1,6 @@
 AUC.multiclass = function(obs,pred){ 
 # formula from Fawcett 2006 Pat Rec Letters. They took it from # Provost and Domingos 2001, Machine learning
+  library(pROC)
   if (ncol(obs)!=ncol(pred)){stop}
   auc.all = list()
   roc.all = list()
