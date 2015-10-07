@@ -10,5 +10,7 @@ Depends: R (>= 3.1.0)
 License: MIT + file LICENSE
 Maintainer: Bob Douma <bob.douma@wur.nl>
 LazyData: true
-Suggests: testthat
-Imports: gtools
+Suggests: 
+    testthat,
+    gtools, 
+    pROC
