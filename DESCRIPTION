@@ -11,4 +11,4 @@ License: MIT + file LICENSE
 Maintainer: Bob Douma <bob.douma@wur.nl>
 LazyData: true
 Suggests: testthat
-Imports: 
+Imports: gtools
