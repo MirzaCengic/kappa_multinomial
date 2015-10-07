@@ -8,7 +8,7 @@
 kappa_multinomial(x)
 }
 \arguments{
-\item{x}{a list containing data summaries to be used in calculating kappa multinomial. These are usually the result of a call to kappa.multinomial.stats, but can be generated in another fasion.}
+\item{x}{a list containing data summaries to be used in calculating kappa multinomial. These are usually the result of a call to kappa_multinomial_stats, but can be generated in another fasion.}
 }
 \value{
 returns a list with the following elements:
@@ -28,7 +28,11 @@ Multinomial models are difficult to assess in across--model way.
 This is details
 }
 \examples{
-NULL
+library(gtools)
+pred = rdirichlet(100, c(0.1,0.1,0.5,0.5))
+obs = t(apply(pred,1,rmultinom,size=1,n=1))
+k_stats = kappa_multinomial_stats(obs=obs,pred=pred)
+kappa_multinomial(k_stats)
 }
 \author{
 Bob Douma
