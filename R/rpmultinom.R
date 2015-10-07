@@ -1,35 +1,4 @@
-##'   
-##' 
-##' @title Multinomial distribution
-##' 
-##' @description This function generates a multinomial probilities for x classes
-##' 
-##' @encoding utf8
-##' 
-##' @param x the number of classes
-##' @param skewness number to determine the differences between class probabilities, 1 < skewness < 100. The larger skewness the larger the difference between class probabilities
-##' @param double logical; if TRUE, the difference between he most probable and second most probable class is very small
-##' 
-##' @return returns a list with the following elements: 
-##'  \itemize{
-##' \item{rpmultinom} generates random probabilities for x classes
-##' }
-##' 
-##' @export
-##' 
-##' @details This is details
-##' @author Bob Douma
-##' 
-##' @references 
-##' NULL
-##' @seealso 
-##' package DirichletReg and gtools
-##' 
-##' @examples 
-##' rpmultinom(10,skewness=1,double=FALSE)
-##' 
-
-
+# generate multinomial probabilities
 rpmultinom<-function(x,skewness,double=FALSE){
   stopifnot(skewness >= 1 | skewness <= 100) 
 # x number of classes to be predicted
