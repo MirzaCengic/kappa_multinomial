@@ -34,14 +34,14 @@
 
 # kappa calculation
 kappa_multinomial<-function(x){
-  obs_total<-input[[1]]$observed                                        
-  pred_total<-input[[1]]$predicted
-  realized<-input[[1]]$realized
+  obs_total<-x[[1]]$observed                                        
+  pred_total<-x[[1]]$predicted
+  realized<-x[[1]]$realized
   po<-realized/sum(obs_total)                                          # fraction of correctly classified cells
   pi.<-obs_total/sum(obs_total)                                         # marginal totals of observed
   pe = sum(pi.*pi.)
   # marginal totals of predicted
-  pmax = input[[1]]$pmax
+  pmax = x[[1]]$pmax
   k_prob<-(po-pe)/(pmax-pe)
   k_loc<-(pmax-pe)/(1-pe)
   k_multinomial <- k_loc*k_prob                                                                                                # kappa calculation
