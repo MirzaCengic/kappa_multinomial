@@ -29,10 +29,10 @@ This is details
 }
 \examples{
 library(gtools)
-pred = rdirichlet(100, c(0.1,0.1,0.5,0.5))
-obs = t(apply(pred,1,rmultinom,size=1,n=1))
-k_stats = kappa_multinomial_stats(obs=obs,pred=pred)
-kappa_multinomial(k_stats)
+pred = rdirichlet(100, c(0.1,0.1,0.5,0.5)) # generate multinomial probabilties with four classes
+obs = t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
+k_stats = kappa_multinomial_stats(obs=obs,pred=pred) # REMOVE?????
+kappa_multinomial(k_stats) # calculate kappa
 }
 \author{
 Bob Douma

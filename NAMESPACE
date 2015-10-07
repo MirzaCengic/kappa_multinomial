@@ -2,4 +2,3 @@
 
 export(kappa_multinomial)
 export(kappa_multinomial_stats)
-export(rpmultinom)
