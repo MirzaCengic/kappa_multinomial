@@ -28,13 +28,15 @@
 ##' NULL
 ##' 
 ##' @examples 
-##' 
-##' NULL
+##' library(gtools)
+##' pred = rdirichlet(100, c(0.1,0.1,0.5,0.5))
+##' obs = t(apply(pred,1,rmultinom,size=1,n=1))
+##' kappa_multinomial_stats(obs=obs,pred=pred)
 ##' 
 
 # function to prepare data.frame for kappa_multinomial calculation
 
-kappa.multinomial.stats = function(obs, pred,...){
+kappa_multinomial_stats = function(obs, pred,...){
   obs.agg.dat = obs
   pred.agg.dat = pred
   observed<-apply(obs.agg.dat,2,sum,na.rm=TRUE) 
