@@ -4,7 +4,8 @@
 ##' 
 ##' @encoding utf8
 ##' 
-##' @param x a list containing data summaries to be used in calculating kappa multinomial. These are usually the result of a call to kappa_multinomial_stats, but can be generated in another fasion.
+##' @param obs a data.frame with class obervations with n columns and m rows; each row represents a sample, the columns represent the classes of outcomes. 
+##' @param pred a data.frame with class predictions n columns and m rows; each rows represents a sample, the columns represent the classes of outcomes. 
 ##' 
 ##' @return returns a list with the following elements: 
 ##'  \itemize{
@@ -30,13 +31,13 @@
 ##' library(gtools)
 ##' pred = rdirichlet(100, c(0.1,0.1,0.5,0.5)) # generate multinomial probabilties with four classes
 ##' obs = t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
-##' k_stats = kappa_multinomial_stats(obs=obs,pred=pred) # REMOVE?????
-##' kappa_multinomial(k_stats) # calculate kappa
+##' kappa_multinomial(obs=obs,pred=pred) # calculate kappa
 ##' 
 
 
 # kappa calculation
-kappa_multinomial<-function(x){
+kappa_multinomial<-function(obs,pred){
+  x = kappa_multinomial_stats(obs=obs,pred=pred)
   obs_total<-x$observed                                        
   pred_total<-x$predicted
   realized<-x$realized

@@ -1,42 +1,8 @@
-##' 
-##' @title Kappa multinomial statistics
-##' 
-##' @description This function is typically called by kappa_multinomial and gathers the necessary statistics for producing kappa_multinomial
-##' 
-##' @encoding utf8
-##' 
-##' @param pred a dataframe 
-##' @param obs a dataframe
-##' @param ... other arguments to be passed to the underlying functions
-##' 
-##' @return returns a list with the following elements: 
-##'  \itemize{
-##' \item{observed} a data.frame with the sum of the class occurences
-##' \item{predicted} a data.frame with the sum of the class probabilities 
-##' \item{realized} a data.frame with the sum of the observed class probabilities
-##' \item{pmax} a number with the average probability of the most probable class 
-##' }
-##' 
-##' @export
-##' 
-##' @details This is details
-##' @author Bob Douma
-##' 
-##' @references 
-##' NULL
-##' @seealso 
-##' NULL
-##' 
-##' @examples 
-##' library(gtools)
-##' pred = rdirichlet(100, c(0.1,0.1,0.5,0.5))
-##' obs = t(apply(pred,1,rmultinom,size=1,n=1))
-##' kappa_multinomial_stats(obs=obs,pred=pred)
-##' 
-
 # function to prepare data.frame for kappa_multinomial calculation
 
 kappa_multinomial_stats = function(obs, pred,...){
+  if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames of unequal size")}
+  if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums not equal to one")}
   obs.agg.dat = obs
   pred.agg.dat = pred
   observed<-apply(obs.agg.dat,2,sum,na.rm=TRUE) 
