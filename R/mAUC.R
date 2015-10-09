@@ -12,7 +12,7 @@
 ##' \item{AUC for n classes}
 ##' \item{mAUC}
 ##' }
-##' 
+##' @import pROC
 ##' @export
 ##' 
 ##' @details method taken from Provost and Domingos 2001, Machine learning
