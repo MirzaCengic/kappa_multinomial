@@ -32,7 +32,6 @@
 
 AUC_multiclass = function(obs,pred){ 
 # formula from Fawcett 2006 Pat Rec Letters. They took it from # Provost and Domingos 2001, Machine learning
-  #library(pROC)
   if (ncol(obs)!=ncol(pred)){stop("data.frames of unequal size")}
   if (nrow(obs)!=nrow(pred)){stop("data.frames of unequal size")}
   if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums not equal to one")}
