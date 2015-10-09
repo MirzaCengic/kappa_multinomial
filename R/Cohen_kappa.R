@@ -31,7 +31,7 @@
 ##' 
 
 cohen_kappa<-function(obs,pred){
-  pred.pa = Probabilistic.to.Binary(pred)
+  pred.pa = prob_to_binary(pred)
   x = kappa_multinomial_stats(obs=obs,pred=pred.pa)
   obs_total<-x$observed                                        
   pred_total<-x$predicted
