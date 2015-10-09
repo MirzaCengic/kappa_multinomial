@@ -12,7 +12,7 @@
 ##' \item{AUC for n classes}
 ##' \item{mAUC}
 ##' }
-##' @imports ggplot2 
+##' 
 ##' @export
 ##' 
 ##' @details method taken from Provost and Domingos 2001, Machine learning
