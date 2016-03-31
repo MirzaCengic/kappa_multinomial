@@ -26,9 +26,12 @@ Multinomial models are difficult to assess in across--model way.
 method taken from Provost and Domingos 2001, Machine learning
 }
 \examples{
-library(gtools)
-pred = rdirichlet(100, c(0.1,0.1,0.5,0.5)) # generate multinomial probabilties with four classes
-obs = t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
+# generate multinomial probabilties with four classes
+pred = gtools::rdirichlet(100, c(0.1,0.1,0.5,0.5))
+
+# generate multinomial observations with four classes
+obs = t(apply(pred,1,rmultinom,size=1,n=1))
+
 AUC_multiclass(obs=obs,pred=pred)
 }
 \author{
