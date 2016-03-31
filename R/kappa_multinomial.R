@@ -17,7 +17,7 @@
 ##' \item{pmax}
 ##' }
 ##' 
-##' @export
+##' @export kappa_multinomial_stats
 ##' 
 ##' @details This is details
 ##' @author Bob Douma
@@ -31,7 +31,7 @@
 ##' library(gtools)
 ##' pred = rdirichlet(100, c(0.1,0.1,0.5,0.5)) # generate multinomial probabilties with four classes
 ##' obs = t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
-##' kappa_multinomial(obs=obs,pred=pred) # calculate kappa
+##' kappa_multinomial(obs=obs,pred=pred) # calculate kappa multinomial
 ##' 
 
 
