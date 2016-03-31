@@ -36,14 +36,19 @@
 
 
 # kappa calculation
-kappa_multinomial<-function(obs,pred){
+kappa_multinomial<-function(obs,pred,...){
+  # do checks
+  if (!is.data.frame(obs)){stop("observations not in a dataframe")}  
+  if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames of unequal size")}
+  if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums of predictions not equal to one")}
+  if (sum(apply(obs,1,sum)) != nrow(obs)){stop("rowsums of observations not equal to one")}
+  
   x = kappa_multinomial_stats(obs=obs,pred=pred)
   obs_total<-x$observed                                        
   pred_total<-x$predicted
   realized<-x$realized
-  po<-realized/sum(obs_total)                                          # fraction of correctly classified cells
-  pi.<-obs_total/sum(obs_total)                                         # marginal totals of observed
-  pe = sum(pi.*pi.)
+  po = realized/sum(obs_total)                                          # fraction of correctly classified cells
+  pe = pe(obs)      # null model
   # marginal totals of predicted
   pmax = x$pmax
   k_prob<-(po-pe)/(pmax-pe)

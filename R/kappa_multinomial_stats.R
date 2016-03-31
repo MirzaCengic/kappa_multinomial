@@ -1,8 +1,6 @@
 # function to prepare data.frame for kappa_multinomial calculation
 
 kappa_multinomial_stats = function(obs, pred,...){
-  if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames of unequal size")}
-  if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums not equal to one")}
   obs.agg.dat = obs
   pred.agg.dat = pred
   observed<-apply(obs.agg.dat,2,sum,na.rm=TRUE) 

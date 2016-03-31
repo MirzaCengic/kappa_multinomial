@@ -3,3 +3,4 @@
 export(AUC_multiclass)
 export(cohen_kappa)
 export(kappa_multinomial)
+import(pROC)
