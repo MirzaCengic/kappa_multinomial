@@ -6,10 +6,10 @@ pe = function(obs,nsim=1000){
   if (length(which(obs ==1 | obs ==0)) == (nrow(obs)*ncol(obs))){
     # analytical procedure
     glob.means = apply(obs,2,mean)
-    mean.null = data.frame(matrix(NA,nrow=(nrow(obs)),ncol=5))
+    mean.null = data.frame(matrix(NA,nrow=(nrow(obs)),ncol=ncol(obs)))
     for (i in 1:nrow(mean.null)){mean.null[i,] = glob.means}  
     
-    abs.diff = abs(mean.null - null)
+    abs.diff = abs(mean.null - obs)
     po.eq8 = sum(1-apply(abs.diff,1,sum)/2)/nrow(obs) # calculated according to equation 8 in paper. 
     pe = po.eq8
     } else {
@@ -19,9 +19,9 @@ pe = function(obs,nsim=1000){
       # randomization procedure
       pe.sim = numeric(nsim)
       for (i in 1:nsim){
-        sample = sample(c(1:nrow(null)))
+        sample = sample(c(1:nrow(obs)))
         null.sample = obs[sample,]
-        pe.sim[i] = sum(1-apply(abs(null - null.sample),1,sum)/2)/nrow(null)
+        pe.sim[i] = sum(1-apply(abs(obs - null.sample),1,sum)/2)/nrow(obs)
        
         setTxtProgressBar(pb, i)
       }
