@@ -100,7 +100,7 @@ kappa_multinomial<-function(obs,pred,...){
   k_prob.test<-(po-pe)/(pmax.test-pe)
   k_loc.test<-(pmax.test-pe)/(1-pe)
   k_multinomial.test <- k_loc.test*k_prob.test# kappa calculation
-  out.test = c(k_prob.test,k_loc.test,k_multinomial.test,po,pe,pmax)
-  names(out.test) = c("k_prob","k_loc","k_multinomial","po","pe","pmax")
+  out.test = c(k_prob.test,k_loc.test,k_multinomial.test,po,pe,pmax.test)
+  names(out.test) = c("k_prob","k_loc","k_multinomial","po","pe","pmax.test")
   return(list(out,out.test))   # returns kappa values
 }
