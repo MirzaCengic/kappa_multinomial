@@ -25,7 +25,8 @@ kappa_multinomial_stats = function(obs, pred,...){
   abs.diff = abs(obs - pred)
   po = sum(1-apply(abs.diff,1,sum)/2)/nrow(obs)
   pmax = mean(apply(pred,1,max))
-  return(c("po"=po,"pmax"=pmax))  
+  pmax.test = mean(1-(apply(pred,1,max)- apply(obs,1,max)))
+  return(c("po"=po,"pmax"=pmax,"pmax.test"=pmax.test))  
 }
 
 pe = function(obs,nsim=1000){
@@ -94,5 +95,12 @@ kappa_multinomial<-function(obs,pred,...){
   k_multinomial <- k_loc*k_prob# kappa calculation
   out = c(k_prob,k_loc,k_multinomial,po,pe,pmax)
   names(out) = c("k_prob","k_loc","k_multinomial","po","pe","pmax")
-  return(out)   # returns kappa values
+  # test
+  pmax.test = x["pmax.test"]
+  k_prob.test<-(po-pe)/(pmax-pe)
+  k_loc.test<-(pmax-pe)/(1-pe)
+  k_multinomial.test <- k_loc.test*k_prob.test# kappa calculation
+  out.test = c(k_prob.test,k_loc.test,k_multinomial.test,po,pe,pmax)
+  names(out.test) = c("k_prob","k_loc","k_multinomial","po","pe","pmax")
+  return(list(out,out.test))   # returns kappa values
 }
