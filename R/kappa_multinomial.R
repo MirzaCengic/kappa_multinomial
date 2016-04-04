@@ -86,7 +86,7 @@ kappa_multinomial<-function(obs,pred,...){
   
   x = kappa_multinomial_stats(obs=obs,pred=pred)
   po = x["po"]
-  pe = pe(obs)      # null model
+  pe = pe(obs,...)      # null model
   # marginal totals of predicted
   pmax = x["pmax"]
   k_prob<-(po-pe)/(pmax-pe)
