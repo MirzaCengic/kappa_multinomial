@@ -1,5 +1,9 @@
-devtools::install_github("bobdouma/kappa_multinomial")
+rm(list=ls(all=TRUE))
 
+devtools::install_github("bobdouma/kappa_multinomial", INSTALL_opts = c('--no-lock'))
+#install.packages("Rcpp", dependencies=TRUE)
+
+unlink("D:/BobDouma/Rlibrary/00LOCK-bobdouma-kappa_multinomial-fbaa051")
 
 library(multinomialperform)
 library(DirichletReg)
@@ -20,6 +24,7 @@ obs = as.data.frame(Probabilistic.to.Binary(i,pred))
 
 kappa_multinomial(obs,pred)
 
+
 # pmax
 
 
@@ -37,7 +42,7 @@ pmax = sum(1-apply(abs(t(apply(pred,1,sort))-t(apply(obs,1,sort))),1,sum)/2)/nro
 pred1 = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
 obs1 = as.data.frame(t(apply(pred,1,sample)))
 b = kappa_multinomial(obs=obs1,pred=pred1) # calculate kappa
-
+b
 sum(1-apply(abs(pred1-obs1),1,sum)/2)/nrow(pred1)
 # pmax
 sum(1-apply(abs(t(apply(pred1,1,sort))-t(apply(obs1,1,sort))),1,sum)/2)/nrow(pred1)
@@ -52,7 +57,7 @@ increase = function(x,val=0.1){
   return(x)
 }
 
-pred2= increase(pred)   
+pred2= increase(pred,val=0.15)   
 
 sum(1-apply(abs(pred2-obs),1,sum)/2)/nrow(pred2)
 # pmax
@@ -80,7 +85,7 @@ sample.row = function(x,n=20){
 
 pred4= pred2
 pred4[c(1:100),] =  t(apply(pred2[c(1:100),],1,sample))
-
+test = sample.row(pred2)
 
 sum(1-apply(abs(pred4-obs),1,sum)/2)/nrow(pred4)
 # pmax
@@ -88,6 +93,8 @@ sum(1-apply(abs(t(apply(pred4,1,sort))-t(apply(obs,1,sort))),1,sum)/2)/nrow(pred
 
 
 kappa_multinomial(obs=obs,pred=pred4) # calculate kappa
+
+kappa_multinomial(obs=obs,pred=test) # calculate kappa
 
 
 

@@ -57,23 +57,22 @@ kappa_multinomial<-function(obs,pred,...){
   if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames of unequal size")}
   if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums of predictions not equal to one")}
   if (sum(apply(obs,1,sum)) != nrow(obs)){stop("rowsums of observations not equal to one")}
-  
   x = kappa_multinomial_stats(obs=obs,pred=pred)
-  obs_total<-x$observed                                        
-  pred_total<-x$predicted
-  realized<-x$realized
-  po = realized/sum(obs_total)                                          # fraction of correctly classified cells
+  po = x["po"]
   pe = pe(obs)      # null model
   # marginal totals of predicted
-  pmax = x$pmax
+  pmax = x["pmax"]
   k_prob<-(po-pe)/(pmax-pe)
   k_loc<-(pmax-pe)/(1-pe)
   k_multinomial <- k_loc*k_prob# kappa calculation
   # new 
-  pmax.new = x$pmax.new
+  pmax.new = x["pmax.new"]
   k_prob.new<-(po-pe)/(pmax.new-pe)
   k_loc.new<-(pmax.new-pe)/(1-pe)
   k_multinomial.new <- k_loc.new*k_prob.new# kappa calculation
-  return(list(old = c(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax),# returns kappa values
-              new = c(k_prob.new=k_prob.new,k_loc.new=k_loc.new,k_multinomial.new=k_multinomial.new,po.new = po.new,pe.new=pe.new,pmax.new=pmax.new)))   
+  old = c(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax)
+  new = c(k_prob.new=k_prob.new,k_loc.new=k_loc.new,k_multinomial.new=k_multinomial.new,po = po,pe=pe,pmax.new=pmax.new)
+  names(old) = c("k_prob","k_loc","k_multi","po","pe","pmax") 
+  names(new) = c("k_prob","k_loc","k_multi","po","pe","pmax")
+  return(list(old,new)) #returns kappa values
 }
