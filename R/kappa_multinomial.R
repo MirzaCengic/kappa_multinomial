@@ -68,6 +68,12 @@ kappa_multinomial<-function(obs,pred,...){
   pmax = x$pmax
   k_prob<-(po-pe)/(pmax-pe)
   k_loc<-(pmax-pe)/(1-pe)
-  k_multinomial <- k_loc*k_prob                                                                                                # kappa calculation
-  return(list(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax))   # returns kappa values
+  k_multinomial <- k_loc*k_prob# kappa calculation
+  # new 
+  pmax.new = x$pmax.new
+  k_prob.new<-(po-pe)/(pmax.new-pe)
+  k_loc.new<-(pmax.new-pe)/(1-pe)
+  k_multinomial.new <- k_loc.new*k_prob.new# kappa calculation
+  return(list(old = c(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax),# returns kappa values
+              new = c(k_prob.new=k_prob.new,k_loc.new=k_loc.new,k_multinomial.new=k_multinomial.new,po.new = po.new,pe.new=pe.new,pmax.new=pmax.new))   
 }
