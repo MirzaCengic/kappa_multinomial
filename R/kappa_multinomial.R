@@ -75,5 +75,5 @@ kappa_multinomial<-function(obs,pred,...){
   k_loc.new<-(pmax.new-pe)/(1-pe)
   k_multinomial.new <- k_loc.new*k_prob.new# kappa calculation
   return(list(old = c(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax),# returns kappa values
-              new = c(k_prob.new=k_prob.new,k_loc.new=k_loc.new,k_multinomial.new=k_multinomial.new,po.new = po.new,pe.new=pe.new,pmax.new=pmax.new))   
+              new = c(k_prob.new=k_prob.new,k_loc.new=k_loc.new,k_multinomial.new=k_multinomial.new,po.new = po.new,pe.new=pe.new,pmax.new=pmax.new)))   
 }
