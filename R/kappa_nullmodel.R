@@ -2,6 +2,7 @@
 
 pe = function(obs,nsim=1000){
   # do checks on dataframe
+  # if observations are discrete analytical solution is used; if not discrete randomization procedure
   if (length(which(obs ==1 | obs ==0))<(nrow(obs)*ncol(obs))){print("Observations are not discrete. A randomization procedure is used to calculate pe. Consider adjusting nsim")}
   if (length(which(obs ==1 | obs ==0)) == (nrow(obs)*ncol(obs))){
     # analytical procedure
@@ -10,9 +11,9 @@ pe = function(obs,nsim=1000){
     for (i in 1:nrow(mean.null)){mean.null[i,] = glob.means}  
     
     abs.diff = abs(mean.null - obs)
-    po.eq8 = sum(1-apply(abs.diff,1,sum)/2)/nrow(obs) # calculated according to equation 8 in paper. 
-    pe = po.eq8
-  } else {
+    po.eq9 = sum(1-apply(abs.diff,1,sum)/2)/nrow(obs) # calculated according to equation 9 in paper
+    pe = po.eq9
+  } else { # randomization procedure is used when observations are not discrete
     # set progressbar
     pb <- txtProgressBar(min=1,max=nsim)
     
