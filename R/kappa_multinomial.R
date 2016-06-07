@@ -45,15 +45,15 @@ kappa_multinomial<-function(obs,pred,...){
   if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums of predictions not equal to one")}
   if (sum(apply(obs,1,sum)) != nrow(obs)){stop("rowsums of observations not equal to one")}
   x = kappa_multinomial_stats(obs=obs,pred=pred)
-  po = x["po"]
+  po = x["po"]      # observed agreement; Eq. 7
   pe = pe(obs)      # null model obtained through randomization or through the analytical; Eq. 9
   # marginal totals of predicted
-  pmax = x["pmax"]  # 
-  k_prob<-(po-pe)/(pmax-pe)
-  k_loc<-(pmax-pe)/(1-pe)
-  k_multinomial <- k_loc*k_prob# kappa calculation
+  pmax = x["pmax"]  # Eq. 4
+  k_prob<-(po-pe)/(pmax-pe) # Eq. 6
+  k_loc<-(pmax-pe)/(1-pe) # Eq. 6
+  k_multinomial <- k_loc*k_prob # # Eq. 6
   # new 
-  pmax.new = x["pmax.new"] # Will, this refers to the new way that I calculate pmax. Originally, it iwas the maximum of the sample probabilities (see )
+  pmax.new = x["pmax.new"] # Eq. 8 Will, this refers to the new way that I calculate pmax. Originally, it iwas the maximum of the sample probabilities
   k_prob.new<-(po-pe)/(pmax.new-pe)
   k_loc.new<-(pmax.new-pe)/(1-pe)
   k_multinomial.new <- k_loc.new*k_prob.new# kappa calculation
