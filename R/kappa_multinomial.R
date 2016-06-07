@@ -1,8 +1,8 @@
-##' Multinomial models are difficult to assess in across--model way.  
+##'   
+##' @title kappa_multinomial
 ##' 
-##' @title A kappa-like measure for multinomial models
+##' @description A kappa-like measure for multinomial models
 ##' 
-##' @encoding utf8
 ##' 
 ##' @param obs a data.frame with class obervations with n columns and m rows; each row represents a sample, the columns represent the classes of outcomes. 
 ##' @param pred a data.frame with class predictions n columns and m rows; each rows represents a sample, the columns represent the classes of outcomes. 
@@ -18,23 +18,8 @@
 ##' }
 ##' 
 ##' @export 
-##' # function to prepare data.frame for kappa_multinomial calculation
-
-kappa_multinomial_stats = function(obs, pred,...){
-  obs.agg.dat = obs
-  pred.agg.dat = pred
-  observed<-apply(obs.agg.dat,2,sum,na.rm=TRUE) 
-  # calculates marginal totals
-  predicted<-apply(pred.agg.dat,2,sum,na.rm=TRUE)
-  common.freq<-(1-(apply(abs(obs.agg.dat-pred.agg.dat),1,sum)/2)) #calculates the fraction of cells in common between pred and obs      
-  realized<-sum(common.freq,na.rm=TRUE)                           #number of cells in common on total raster
-  pmax = mean(apply(pred.agg.dat,1,max))
-  return(list(observed=observed, predicted=predicted,realized=realized,pmax=pmax))  
-}
-
-
 ##' 
-##' @details This is details
+##' @details Multinomial models are difficult to assess in across--model way.
 ##' @author Bob Douma
 ##' 
 ##' @references 
@@ -48,7 +33,9 @@ kappa_multinomial_stats = function(obs, pred,...){
 ##' obs = t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
 ##' kappa_multinomial(obs=obs,pred=pred) # calculate kappa multinomial
 ##' 
-
+##' 
+##' 
+##' 
 
 # kappa calculation
 kappa_multinomial<-function(obs,pred,...){
@@ -75,4 +62,18 @@ kappa_multinomial<-function(obs,pred,...){
   names(old) = c("k_prob","k_loc","k_multi","po","pe","pmax") 
   names(new) = c("k_prob","k_loc","k_multi","po","pe","pmax")
   return(list(old,new)) #returns kappa values
+}
+
+
+# function to prepare data.frame for kappa_multinomial calculation
+kappa_multinomial_stats = function(obs, pred,...){
+  obs.agg.dat = obs
+  pred.agg.dat = pred
+  observed<-apply(obs.agg.dat,2,sum,na.rm=TRUE) 
+  # calculates marginal totals
+  predicted<-apply(pred.agg.dat,2,sum,na.rm=TRUE)
+  common.freq<-(1-(apply(abs(obs.agg.dat-pred.agg.dat),1,sum)/2)) #calculates the fraction of cells in common between pred and obs      
+  realized<-sum(common.freq,na.rm=TRUE)                           #number of cells in common on total raster
+  pmax = mean(apply(pred.agg.dat,1,max))
+  return(list(observed=observed, predicted=predicted,realized=realized,pmax=pmax))  
 }
