@@ -10,7 +10,6 @@
 ##' @return returns a list with the following elements: 
 ##' \item{pred}
 ##' 
-##' @export 
 ##' 
 ##' @details helper function for the tutorial
 ##' @author Bob Douma

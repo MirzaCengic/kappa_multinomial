@@ -9,7 +9,6 @@
 ##' @return returns a vector with the following elements: 
 ##' \item{y}
 ##' 
-##' @export 
 ##' 
 ##' @details helper function for the tutorial
 ##' @author Bob Douma
