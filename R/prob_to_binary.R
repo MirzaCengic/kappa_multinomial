@@ -3,6 +3,7 @@
 ##' 
 ##' @description This function transform probabilties to presence absence, by assuming that the class with highest sample probability if present and the others classes are absent
 ##' 
+##' @encoding utf8
 ##' 
 ##' @param pred a data.frame with class predictions n columns and m rows; each rows represents a sample, the columns represent the classes of outcomes. 
 ##' 
@@ -27,7 +28,7 @@
 ##' 
 ##' 
 
-# This function apply the function select.max to a data.frame consisting of multiple rows.
+
 prob_to_binary = function(pred){
 pred.type = t(apply(pred,1,select_max)) 
 # transform maximum prob into 1 and others in 0's
