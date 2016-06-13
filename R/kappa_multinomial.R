@@ -48,20 +48,13 @@ kappa_multinomial<-function(obs,pred,...){
   po = x["po"]      # observed agreement; Eq. 7
   pe = pe(obs)      # null model obtained through randomization or through the analytical; Eq. 9
   # marginal totals of predicted
-  pmax = x["pmax"]  # Eq. 4
+  pmax = x["pmax"]  # Eq. 8
   k_prob<-(po-pe)/(pmax-pe) # Eq. 6
   k_loc<-(pmax-pe)/(1-pe) # Eq. 6
   k_multinomial <- k_loc*k_prob # # Eq. 6
-  # new 
-  pmax.new = x["pmax.new"] # Eq. 8 Will, this refers to the new way that I calculate pmax. Originally, it iwas the maximum of the sample probabilities
-  k_prob.new<-(po-pe)/(pmax.new-pe)
-  k_loc.new<-(pmax.new-pe)/(1-pe)
-  k_multinomial.new <- k_loc.new*k_prob.new# kappa calculation
-  old = c(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax)
-  new = c(k_prob.new=k_prob.new,k_loc.new=k_loc.new,k_multinomial.new=k_multinomial.new,po = po,pe=pe,pmax.new=pmax.new)
-  names(old) = c("k_prob","k_loc","k_multi","po","pe","pmax") 
-  names(new) = c("k_prob","k_loc","k_multi","po","pe","pmax")
-  return(list(old,new)) #returns kappa values
+  out = c(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax)
+  names(out) = c("k_prob","k_loc","k_multi","po","pe","pmax") 
+  return(out) #returns kappa values
 }
 
 
