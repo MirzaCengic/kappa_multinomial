@@ -29,7 +29,7 @@
 ##' 
 
 
-prob_to_binary = function(pred){
+prob_to_binary <- function(pred){
 pred.type = t(apply(pred,1,select_max)) 
 # transform maximum prob into 1 and others in 0's
   return(pred=pred.type)

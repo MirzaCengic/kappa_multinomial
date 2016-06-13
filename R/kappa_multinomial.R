@@ -79,24 +79,3 @@ kappa_multinomial_stats = function(obs, pred,...){
 }
 
 
-# This function apply the function select.max to a data.frame consisting of multiple rows.
-prob_to_binary = function(pred){
-pred.type = t(apply(pred,1,select_max)) 
-# transform maximum prob into 1 and others in 0's
-  return(pred=pred.type)
-}  
-  
-
-# this function converts multinomial probability distribution to presence/absence. If multiple classes are predicted with the same maximum probability one class is chosen.
-select_max = function(x){
-  t.f = x>=max(x)
-  if (length(x[t.f])>1){
-    y = rep(0,length=length(x))
-    seq.1 = c(1:length(x))
-    index = sample(seq.1[t.f],1)
-    y[index] = 1
-  } else  {
-    y = ifelse(x>=max(x),1,0)  
-  }
-  return(y)
-}
