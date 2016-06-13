@@ -78,6 +78,7 @@ kappa_multinomial_stats = function(obs, pred,...){
   return(list(observed=observed, predicted=predicted,realized=realized,pmax=pmax))  
 }
 
+
 # This function apply the function select.max to a data.frame consisting of multiple rows.
 prob_to_binary = function(pred){
 pred.type = t(apply(pred,1,select_max)) 
