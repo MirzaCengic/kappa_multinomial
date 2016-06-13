@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 
 <div id="this-is-a-brief-tutorial-for-using-kappa_multinomial-a-new-way-to-assess-the-performance-of-multinomial-predictions-for-landcover" class="section level1">
-<h1>This is a brief tutorial for using <span class="math inline">\(\kappa_multinomial\)</span>, a new way to assess the performance of multinomial predictions for landcover</h1>
+<h1>This is a brief tutorial for using <span class="math inline">\(\kappa_{multinomial}\)</span>, a new way to assess the performance of multinomial predictions for landcover</h1>
 <p>First install the packages. Here we use the library <code>gtools</code> to generate some data to simulate data for testing purposes.</p>
 <pre class="r"><code>#install.packages(&quot;devtools&quot;)
 devtools::install_github(&quot;bobdouma/kappa_multinomial&quot;)
@@ -136,11 +136,11 @@ obs = as.data.frame(prob_to_binary(pred))
 kappa_multinomial(obs=obs,pred=pred) # calculate kappa</code></pre>
 <pre><code>## [[1]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 1.0000000 0.6626062 0.6626062 0.7483717 0.2542000 0.7483717 
+## 1.0000000 0.6140681 0.6140681 0.7143332 0.2598000 0.7143332 
 ## 
 ## [[2]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 1.0000000 0.6626062 0.6626062 0.7483717 0.2542000 0.7483717</code></pre>
+## 1.0000000 0.6140681 0.6140681 0.7143332 0.2598000 0.7143332</code></pre>
 </div>
 <div id="case-2-predictions-are-continuous-probabilities-and-observations-discrete" class="section level3">
 <h3>case 2: Predictions are continuous probabilities and observations discrete</h3>
@@ -151,11 +151,11 @@ obs = as.data.frame(prob_to_binary(pred))
 kappa_multinomial(obs=obs,pred=pred) # calculate kappa</code></pre>
 <pre><code>## [[1]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 1.0000000 0.8497074 0.8497074 0.8873106 0.2502000 0.8873106 
+## 1.0000000 0.8538510 0.8538510 0.8932236 0.2694000 0.8932236 
 ## 
 ## [[2]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 1.0000000 0.8497074 0.8497074 0.8873106 0.2502000 0.8873106</code></pre>
+## 1.0000000 0.8538510 0.8538510 0.8932236 0.2694000 0.8932236</code></pre>
 </div>
 <div id="case-3-predictions-are-continuous-probabilities-and-observations-discrete" class="section level3">
 <h3>case 3: Predictions are continuous probabilities and observations discrete</h3>
@@ -168,15 +168,15 @@ obs[resample,] = obs[sample(resample),] # randomly shuffle 20 observations
 kappa_multinomial(obs=obs,pred=pred) # calculate kappa</code></pre>
 <pre><code>## [[1]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 0.8415182 0.8224730 0.6921260 0.7711265 0.2566000 0.8680264 
+## 0.8342847 0.8151472 0.6800648 0.7604965 0.2514000 0.8616192 
 ## 
 ## [[2]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 0.8415182 0.8224730 0.6921260 0.7711265 0.2566000 0.8680264</code></pre>
+## 0.8342847 0.8151472 0.6800648 0.7604965 0.2514000 0.8616192</code></pre>
 </div>
 <div id="case-4-predictions-are-continuous-probabilities-and-observations-not-discrete" class="section level3">
 <h3>case 4: Predictions are continuous probabilities and observations not discrete</h3>
-<p>In this case we show an example wehere prediction frequency is equal to observed frequency. In this case kappa_multinomial should equal 1, indicating perfect model performance.</p>
+<p>In this case we show an example wehere prediction frequency is equal to observed frequency. In this case _{multinomial} should equal 1, indicating perfect model performance.</p>
 <pre class="r"><code>pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
 obs = pred
 kappa_multinomial(obs=obs,pred=pred) # calculate kappa</code></pre>
@@ -184,11 +184,11 @@ kappa_multinomial(obs=obs,pred=pred) # calculate kappa</code></pre>
 ## ========================================================================================================================</code></pre>
 <pre><code>## [[1]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 2.1838108 0.4579151 1.0000000 1.0000000 0.4979675 0.7278558 
+## 1.9074073 0.5242719 1.0000000 1.0000000 0.4548179 0.7406415 
 ## 
 ## [[2]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 1.0000000 1.0000000 1.0000000 1.0000000 0.4979675 1.0000000</code></pre>
+## 1.0000000 1.0000000 1.0000000 1.0000000 0.4548179 1.0000000</code></pre>
 </div>
 <div id="case-5-observations-not-discrete-and-prediction-frequency-random-relative-to-observed" class="section level3">
 <h3>case 5: Observations not discrete and prediction frequency random relative to observed</h3>
@@ -200,11 +200,11 @@ kappa_multinomial(obs=obs,pred=pred) # calculate kappa</code></pre>
 ## ========================================================================================================================</code></pre>
 <pre><code>## [[1]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 0.2618803 0.6323897 0.1656104 0.4514112 0.3425268 0.7583061 
+## 0.2538516 0.6095946 0.1547466 0.4529035 0.3527427 0.7473073 
 ## 
 ## [[2]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 0.1656104 1.0000000 0.1656104 0.4514112 0.3425268 1.0000000</code></pre>
+## 0.1547466 1.0000000 0.1547466 0.4529035 0.3527427 1.0000000</code></pre>
 </div>
 <div id="case-6-tot-hier-gekomen" class="section level3">
 <h3>case 6: ## tot hier gekomen</h3>
@@ -227,21 +227,21 @@ kappa_multinomial(obs=obs,pred=pred) # calculate kappa</code></pre>
 ## ========================================================================================================================</code></pre>
 <pre><code>## [[1]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 2.0881862 0.4788845 1.0000000 1.0000000 0.5082296 0.7437308 
+## 2.3399768 0.4273547 1.0000000 1.0000000 0.4986569 0.7129082 
 ## 
 ## [[2]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 1.0000000 1.0000000 1.0000000 1.0000000 0.5082296 1.0000000</code></pre>
+## 1.0000000 1.0000000 1.0000000 1.0000000 0.4986569 1.0000000</code></pre>
 <pre class="r"><code>kappa_multinomial(obs=obs,pred=pred.lower) # calculate kappa</code></pre>
 <pre><code>## [1] &quot;Observations are not discrete. A randomization procedure is used to calculate pe. Consider adjusting nsim&quot;
 ## ========================================================================================================================</code></pre>
 <pre><code>## [[1]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 2.7148672 0.2973678 0.8073141 0.9050000 0.5069697 0.6535810 
+## 3.3144059 0.2442655 0.8095951 0.9046667 0.4993126 0.6216133 
 ## 
 ## [[2]]
 ##    k_prob     k_loc   k_multi        po        pe      pmax 
-## 0.9974422 0.8093843 0.8073141 0.9050000 0.5069697 0.9060207</code></pre>
+## 0.9981134 0.8111253 0.8095951 0.9046667 0.4993126 0.9054328</code></pre>
 </div>
 </div>
 
