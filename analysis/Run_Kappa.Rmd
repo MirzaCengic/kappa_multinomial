@@ -7,10 +7,31 @@ options(width = 120)
 opts_chunk$set(fig.width = 12, fig.height = 8, fig.path = 'Figs/',
                echo=TRUE,results="markup",eval=TRUE,
                include = TRUE, warning = FALSE, message = FALSE)
+
+select_max <- function(x){
+  t.f = x>=max(x)
+  if (length(x[t.f])>1){
+    y = rep(0,length=length(x))
+    seq.1 = c(1:length(x))
+    index = sample(seq.1[t.f],1)
+    y[index] = 1
+  } else  {
+    y = ifelse(x>=max(x),1,0)  
+  }
+  return(y)
+}
+
+
+prob_to_binary = function(pred){
+pred.type = t(apply(pred,1,select_max)) 
+# transform maximum prob into 1 and others in 0's
+  return(pred=pred.type)
+}  
+  
 ```
 
 
-# This is a brief tutorial for using `kappa_multinomial`, a new way to assess the performance of multinomial predictions for landcover
+# This is a brief tutorial for using $\kappa_{multinomial}$, a new way to assess the performance of multinomial predictions for landcover
 
 First install the packages.  Here we use the library `gtools` to generate some data to simulate data for testing purposes.
 
@@ -23,11 +44,11 @@ library(gtools)
 ```
 
 
-In the simplest case there is a matrix (or data frame) of predictions and a data frame of observations.  Both of these can either be binary or continuous probablities.  But all cells of both matrixes must be $0<=x<=1$.  The columns of both matrices correspond to land cover classes $k$.  Each row is a sample $i$. Further for the modelled class probabilities and the class observations it should hold that $\sum_{i=1}^m y_{ik} =1$ and  $\sum_{i=1}^m p_{ik} = 1$.Not that one of the advances of this approach is that uncertainty in the observations can be represented.  The order of the rows for the land cover classes in the observed and predicted matrices should correspond exactly.    
+In the simplest case there is a matrix (or data frame) of predictions and a data frame of observations.  Both of these can either be binary or continuous probablities.  But all cells of both matrixes must be $0<=x<=1$.  The columns of both matrices correspond to land cover classes $k$.  Each row is a sample $i$. Further for the modelled class probabilities and the class observations it should hold that $\sum_{k=1}^q y_{ik} =1$ and  $\sum_{k=1}^m p_{ik} = 1$.Not that one of the advances of this approach is that uncertainty in the observations can be represented.  The order of the rows for the land cover classes in the observed and predicted matrices should correspond exactly.    
 
 ### case 1: Predictions are continuous probabilities and observations discrete
 
-In this case we show an example where the observed classes are predicted to be most likely. This implies that $k_prob$ should equal to one and $k_loc$ will depend on the average certainty with which the observed classes are predited
+In this case we show an example where the observed classes are predicted to be most likely. This implies that $\kappa_{prob}$ should equal to one and $\kappa_{loc}$ will depend on the average certainty with which the observed classes are predited
 
 ```{R,eval = TRUE}
 pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
@@ -52,7 +73,7 @@ kappa_multinomial(obs=obs,pred=pred) # calculate kappa
 
 ### case 3: Predictions are continuous probabilities and observations discrete
 
-In this case we show an example where there is mismatch between the observed classes and the classes predicted to be most likely. $k_loc$ remains similar as the previous example. However $k_prob$ becomes lower than one. 
+In this case we show an example where there is mismatch between the observed classes and the classes predicted to be most likely. $\kappa_{loc}$ remains similar as the previous example. However $\kappa_{prob}$ becomes lower than one. 
 
 
 ```{R,eval = TRUE}
@@ -67,7 +88,7 @@ kappa_multinomial(obs=obs,pred=pred) # calculate kappa
 
 ### case 4: Predictions are continuous probabilities and observations not discrete
 
-In this case we show an example wehere prediction frequency is equal to observed frequency.  In this case kappa_multinomial should equal 1, indicating perfect model performance.   
+In this case we show an example wehere prediction frequency is equal to observed frequency. In this case \kappa_{multinomial} should equal 1, indicating perfect model performance.   
 
 ```{R,eval = TRUE}
 pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
@@ -77,7 +98,7 @@ kappa_multinomial(obs=obs,pred=pred) # calculate kappa
 
 ### case 5: Observations not discrete and prediction frequency random relative to observed
 
-In this case the evaluation of the model should find that $k_prob$ preforms poorly, while the maximum model fit of a model with this set of modelled class distributions for the set of observations, $k_loc$ is one.  
+In this case the evaluation of the model should find that $\kappa_{prob}$ preforms poorly, while the maximum model fit of a model with this set of modelled class distributions for the set of observations, $\kappa_{loc}$ is one.  
 
 ```{R,eval = TRUE}
 pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
@@ -85,11 +106,10 @@ obs = as.data.frame(t(apply(pred,1,sample))) # randomly shuffle observations
 kappa_multinomial(obs=obs,pred=pred) # calculate kappa
 ```
 
-### case 3: ## tot hier gekomen
+### case 6: ## tot hier gekomen
 
-Observations not discrete: The observations are generated such that the class predicted with higest probability is observed to be a bit less likely (val) 
+Observations not discrete: The observations are generated such that the class predicted with higest probability is observed to be a bit less likely (val). The ranking of the sample probabilities remain the same; hence $\kappa_{prob}$ is close to one. In contrast $\kappa_{loc}$ decreases.
 
-Note: here I expect that the old method of calculating pmax will fail because $(p_o-p_e) > (p_{max}-p_e)$
 
 ```{R,eval = TRUE}
 increase = function(x,val=0.1){
@@ -100,22 +120,14 @@ increase = function(x,val=0.1){
   return(x)
 }
 
-pred.case3= increase(pred,val=0.1)
+pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
+obs = pred # randomly shuffle observations
 
-kappa_multinomial(obs=obs,pred=pred.case3) # calculate kappa
+pred.lower= increase(pred,val=0.1)
+
+kappa_multinomial(obs=obs,pred=pred) # calculate kappa
+kappa_multinomial(obs=obs,pred=pred.lower) # calculate kappa
 ```
 
- Note that $k_prob > 1$ when using the old method of calculating pmax
- Note that $k_prob \approx 1$ when using the new method. This makes sense. The model is right in predicting the ranking of the most likely classes; however it is wrong in predicting the accurate probability to each class. 
- 
-### case 4: a more realistic case in which the observations are generated by sampling from the probabilities
- 
-```{R,eval = TRUE}
-# generate multinomial probabilties with four classes
-pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) 
-# generate multinomial observations with four classes
- obs = as.data.frame(t(apply(pred,1,rmultinom,size=1,n=1))) 
- # calculate kappa
- kappa_multinomial(obs=obs,pred=pred) 
-```
- 
+
+
