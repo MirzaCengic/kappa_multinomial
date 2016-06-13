@@ -23,9 +23,49 @@ library(gtools)
 ```
 
 
-In the simplest case there is a matrix (or data frame) of predictions and a data frame of observations.  Both of these can either be binary or continuous probablities.  But all cells of both matrixes must be $0<=x<=1$.  The columns of both matrices correspond to land cover classes.  Each row is an observation.  Not that one of the advances of this approach is that uncertainty in the observations can be represented.  The order of the rows for the land cover classes in the observed and predicted matrices should correspond exactly.    
+In the simplest case there is a matrix (or data frame) of predictions and a data frame of observations.  Both of these can either be binary or continuous probablities.  But all cells of both matrixes must be $0<=x<=1$.  The columns of both matrices correspond to land cover classes $k$.  Each row is a sample $i$. Further for the modelled class probabilities and the class observations it should hold that $\sum_{i=1}^m y_{ik} =1$ and  $\sum_{i=1}^m p_{ik} = 1$.Not that one of the advances of this approach is that uncertainty in the observations can be represented.  The order of the rows for the land cover classes in the observed and predicted matrices should correspond exactly.    
 
-### case 1: Predictions are continuous probabilities and observations not discrete
+### case 1: Predictions are continuous probabilities and observations discrete
+
+In this case we show an example where the observed classes are predicted to be most likely. This implies that $k_prob$ should equal to one and $k_loc$ will depend on the average certainty with which the observed classes are predited
+
+```{R,eval = TRUE}
+pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
+pred = t(apply(pred,1,sample))
+obs = as.data.frame(prob_to_binary(pred))
+kappa_multinomial(obs=obs,pred=pred) # calculate kappa
+```
+
+
+### case 2: Predictions are continuous probabilities and observations discrete
+
+In this case we show an example where the observed classes are predicted to be most likely. However, the certainty with which the classes are predicted is much higher.
+
+
+```{R,eval = TRUE}
+pred = as.data.frame(rdirichlet(100, c(0.1,0.1,4.5,0.5))) # generate multinomial probabilties with four classes
+pred = t(apply(pred,1,sample))
+obs = as.data.frame(prob_to_binary(pred))
+kappa_multinomial(obs=obs,pred=pred) # calculate kappa
+```
+
+
+### case 3: Predictions are continuous probabilities and observations discrete
+
+In this case we show an example where there is mismatch between the observed classes and the classes predicted to be most likely. $k_loc$ remains similar as the previous example. However $k_prob$ becomes lower than one. 
+
+
+```{R,eval = TRUE}
+pred = as.data.frame(rdirichlet(100, c(0.1,0.1,4.5,0.5))) # generate multinomial probabilties with four classes
+pred = t(apply(pred,1,sample))
+obs = as.data.frame(prob_to_binary(pred))  # transform probs to 0,1 (1 being the most likely)
+resample = sample(c(1:100),20) # randomly pick 20 observations
+obs[resample,] = obs[sample(resample),] # randomly shuffle 20 observations
+kappa_multinomial(obs=obs,pred=pred) # calculate kappa
+```
+
+
+### case 4: Predictions are continuous probabilities and observations not discrete
 
 In this case we show an example wehere prediction frequency is equal to observed frequency.  In this case kappa_multinomial should equal 1, indicating perfect model performance.   
 
@@ -33,24 +73,19 @@ In this case we show an example wehere prediction frequency is equal to observed
 pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
 obs = pred
 kappa_multinomial(obs=obs,pred=pred) # calculate kappa
-
-sum(1-apply(abs(pred-obs),1,sum)/2)/nrow(pred)
-
-
-pmax = sum(1-apply(abs(t(apply(pred,1,sort))-t(apply(obs,1,sort))),1,sum)/2)/nrow(pred)
 ```
 
-### case 2: Observations not discrete and prediction frequency random relative to observed
+### case 5: Observations not discrete and prediction frequency random relative to observed
 
-In this case the evaluation of the model should find that it preforms poorly.  
+In this case the evaluation of the model should find that $k_prob$ preforms poorly, while the maximum model fit of a model with this set of modelled class distributions for the set of observations, $k_loc$ is one.  
 
 ```{R,eval = TRUE}
-pred.case2 = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
-obs.case2 = as.data.frame(t(apply(pred,1,sample)))
-kappa_multinomial(obs=obs.case2,pred=pred.case2) # calculate kappa
+pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
+obs = as.data.frame(t(apply(pred,1,sample))) # randomly shuffle observations
+kappa_multinomial(obs=obs,pred=pred) # calculate kappa
 ```
 
-### case 3: 
+### case 3: ## tot hier gekomen
 
 Observations not discrete: The observations are generated such that the class predicted with higest probability is observed to be a bit less likely (val) 
 
