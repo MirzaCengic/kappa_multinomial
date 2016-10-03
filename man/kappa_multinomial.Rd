@@ -4,7 +4,7 @@
 \alias{kappa_multinomial}
 \title{kappa_multinomial}
 \usage{
-kappa_multinomial(obs, pred, ...)
+kappa_multinomial(obs, pred)
 }
 \arguments{
 \item{obs}{a data.frame with class obervations with n columns and m rows; each row represents a sample, the columns represent the classes of outcomes.}
@@ -29,13 +29,12 @@ A kappa-like measure for multinomial models
 Multinomial models are difficult to assess in across--model way.
 }
 \examples{
-library(gtools)
-pred = rdirichlet(100, c(0.1,0.1,0.5,0.5)) # generate multinomial probabilties with four classes
-obs = t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
-kappa_multinomial(obs=obs,pred=pred) # calculate kappa multinomial
-
-
-
+# generate multinomial probabilties with four classes
+pred = data.frame(gtools::rdirichlet(100, c(0.1,0.1,0.5,0.5)))
+# generate multinomial observations with four classes 
+obs = data.frame(t(apply(pred,1,rmultinom,size=1,n=1)))
+# calculate kappa multinomial 
+kappa_multinomial(obs=obs,pred=pred) 
 
 }
 \author{
