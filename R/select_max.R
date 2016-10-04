@@ -7,8 +7,9 @@
 ##' @param x a vector with sample predictions: the elements represent the classes of outcomes. 
 ##' 
 ##' @return returns a vector with the following elements: 
+##' \itemize{
 ##' \item{y}
-##' 
+##' }
 ##' 
 ##' @details helper function for the tutorial
 ##' @author Bob Douma
@@ -21,7 +22,7 @@
 ##' @examples 
 ##' library(gtools)
 ##' pred = rdirichlet(100, c(0.1,0.1,0.5,0.5)) # generate multinomial probabilties with four classes
-##' pred.bin = prob_to_binary(pred)
+##' pred.bin = multinomialperform:::prob_to_binary(pred)
 ##' 
 ##' 
 ##' 
