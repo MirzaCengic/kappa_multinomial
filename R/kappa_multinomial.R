@@ -38,7 +38,7 @@
 
 
 # kappa calculation
-kappa_multinomial<-function(obs, pred){
+kappa_multinomial<-function(obs, pred,...){
   # do checks
   if (!is.data.frame(obs)&!is.matrix(obs)){stop("observations not in a dataframe")}  
   if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames of unequal size")}
@@ -46,7 +46,7 @@ kappa_multinomial<-function(obs, pred){
   if (sum(apply(obs,1,sum)) != nrow(obs)){stop("rowsums of observations not equal to one")}
   x = kappa_multinomial_stats(obs=obs,pred=pred)
   po = x["po"]      # observed agreement; Eq. 7
-  pe = pe(obs)      # null model obtained through randomization or through the analytical; Eq. 9
+  pe = pe(obs,...)      # null model obtained through randomization or through the analytical; Eq. 9
   # marginal totals of predicted
   pmax = x["pmax"]  # Eq. 8
   k_prob<-(po-pe)/(pmax-pe) # Eq. 6
