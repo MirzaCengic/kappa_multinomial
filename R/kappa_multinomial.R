@@ -16,7 +16,7 @@
 ##' \item{pe}
 ##' \item{pmax}
 ##' }
-##' 
+##' @importFrom ("utils", "setTxtProgressBar", "txtProgressBar")
 ##' @export 
 ##' 
 ##' @details The null model is calculated analytically if possible, and calculated by randomzation otherwise.

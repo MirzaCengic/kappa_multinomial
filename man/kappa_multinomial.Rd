@@ -4,13 +4,14 @@
 \alias{kappa_multinomial}
 \title{kappa_multinomial}
 \usage{
-kappa_multinomial(obs, pred, nsim)
+kappa_multinomial(obs, pred, nsim = 1000)
 }
 \arguments{
 \item{obs}{a data.frame with class obervations with n columns and m rows; each row represents a sample, the columns represent the classes of outcomes.}
 
-\item{pred}{a data.frame with class predictions n columns and m rows; each rows represents a sample, the columns represent the classes of outcomes.}
-\item{nsim}{a number representing the number of randomizations when pe cannot be computed analytically}
+\item{pred}{a data.frame with class predictions with n columns and m rows; each rows represents a sample, the columns represent the classes of outcomes.}
+
+\item{nsim}{to be passed to the null model if null model is computed based on randmization. nsim represents the number of randomizations}
 }
 \value{
 returns a list with the following elements: 
@@ -27,7 +28,7 @@ returns a list with the following elements:
 A kappa-like measure for multinomial models
 }
 \details{
-Multinomial models are difficult to assess in across--model way.
+The null model is calculated analytically if possible, and calculated by randomzation otherwise.
 }
 \examples{
 # generate multinomial probabilties with four classes
