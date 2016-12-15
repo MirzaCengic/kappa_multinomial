@@ -64,7 +64,7 @@ kappa_multinomial(obs=obs,pred=pred) # calculate kappa
 
 ### Case 2: Predictions are continuous probabilities and observations discrete
 
-In this case we show an example where the observed classes are predicted to be most likely. However, the certainty with which the classes are predicted is much higher.
+In this case we show an example where the observed classes are predicted to be most likely. However, the certainty with which the classes are predicted is much higher. Again, $\kappa_{prob}$ should equal to one and $\kappa_{loc}$ will depend on the average certainty with which the observed classes are predited
 
 
 ```{R,eval = TRUE}
@@ -105,7 +105,7 @@ In this case the evaluation of the model should find that $\kappa_{prob}$ prefor
 ```{R,eval = TRUE}
 pred = as.data.frame(rdirichlet(100, c(0.1,0.1,0.5,0.5))) # generate multinomial probabilties with four classes
 obs = as.data.frame(t(apply(pred,1,sample))) # randomly shuffle observations
-kappa_multinomial(obs=obs,pred=pred) # calculate kappa
+kappa_multinomial(obs=obs,pred=pred,nsim=10000) # calculate kappa
 ```
 
 ### Case 6: Observations not discrete and the most likely class to be observed is predicted with lower probability. However the ranking within a sample remains the same. 
