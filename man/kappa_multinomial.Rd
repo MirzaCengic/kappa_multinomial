@@ -4,12 +4,13 @@
 \alias{kappa_multinomial}
 \title{kappa_multinomial}
 \usage{
-kappa_multinomial(obs, pred)
+kappa_multinomial(obs, pred, nsim)
 }
 \arguments{
 \item{obs}{a data.frame with class obervations with n columns and m rows; each row represents a sample, the columns represent the classes of outcomes.}
 
 \item{pred}{a data.frame with class predictions n columns and m rows; each rows represents a sample, the columns represent the classes of outcomes.}
+\item{nism}{a number representing the number of randomizations when pe cannot be computed analytically}
 }
 \value{
 returns a list with the following elements: 
