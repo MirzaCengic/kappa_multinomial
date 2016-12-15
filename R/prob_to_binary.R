@@ -1,3 +1,5 @@
+
+
 ##'   
 ##' @title prob_to_binary
 ##' 
@@ -11,6 +13,8 @@
 ##' \itemize{
 ##' \item{pred}
 ##' }
+##' 
+##' @export
 ##' 
 ##' @details helper function for the tutorial
 ##' 
