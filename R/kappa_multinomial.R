@@ -52,7 +52,7 @@ kappa_multinomial<-function(obs, pred){
   k_prob<-(po-pe)/(pmax-pe) # Eq. 6
   k_loc<-(pmax-pe)/(1-pe) # Eq. 6
   k_multinomial <- k_loc*k_prob # # Eq. 6
-  out = data.frame(k_prob=k_prob,k_loc=k_loc,k_multinomial=k_multinomial,po = po,pe=pe,pmax=pmax)
+  out = data.frame("k_prob"=k_prob,"k_loc"=k_loc,"k_multinomial"=k_multinomial,"po" = po,"pe"=pe,"pmax"=pmax)
   rownames(out) = "" 
   return(out) #returns kappa values
 }
