@@ -56,27 +56,31 @@ We start with an example to illustrate the use of $\kappa_{multinomial}$. We pro
 
 
 
-```{r,eval=TRUE}
-
+```{r,eval=TRUE, fig.width=7,fig.height=7}
+library(grDevices)
 load("obs_mod_brick.Rdata")
-
+obs
 plot(obs,legend=F,col = rev(terrain.colors(4)))
-legend("topright", legend = c("Grassland", "Coniferous Forest", "Broadleaf Forest", "Shrubland"), fill = rev(terrain.colors(4)))
+ legend("topright", legend = c("Grassland", "Coniferous Forest", "Broadleaf Forest", "Shrubland"), fill = rev(terrain.colors(4)))
 plot(vmap)
-
+ 
 pred.dat = values(vmap)
 obs.dat = values(obs.map)
 # remove nas
 obs.dat = obs.dat[!is.na(apply(obs.dat,1,sum)),]
 pred.dat = pred.dat[!is.na(apply(pred.dat,1,sum)),]
-
+# calculate statistic 
 kappa_multinomial(obs.dat,pred.dat)
 
 
 
 ```
 
-In this example that the model does not fit the data very well. $\kappa_{multinomial}$ is very low which is mainly due to the fact that $\kappa_{prob}$ is low. Apparently, the observed classesare not predicted with the highest probability. 
+In this example the model does not fit the data very well. $\kappa_{multinomial}$ is very low which is mainly due to the fact that $\kappa_{prob}$ is low. Apparently, the observed classes are not predicted with the highest probability. 
+
+
+
+## Synthetic data
 
 In the simplest case there is a matrix (or data frame) of predictions and a data frame of observations.  Both of these can either be binary or continuous probablities.  But all cells of both matrixes must be $0<=y_{i}<=1$.  The columns of both matrices correspond to $q$ land cover classes.  Each row is a sample $i$. Further for the modelled class probabilities and the class observations it should hold that $\sum_{k=1}^q y_{ik} =1$ and  $\sum_{k=1}^m p_{ik} = 1$.Not that one of the advances of this approach is that uncertainty in the observations can be represented.  The order of the rows for the land cover classes in the observed and predicted matrices should correspond exactly.    
 
