@@ -20,8 +20,9 @@
 ##' 
 ##' @export 
 ##' 
-##' @details 'obs' and 'pred' should contain probabilities or discrete outcomes (0,1). 
-##' ##' The null model is calculated analytically when observations are discrete and calculated by randomzation otherwise.
+##' @details kappa_multinomial is caclulated from two components: kappa_loc and kappa_prob. For details see Douma et al 2017.  
+##' obs and pred should contain probabilities or discrete outcomes (0,1). 
+##' The null model is calculated analytically when observations are discrete and calculated by randomzation otherwise.
 ##' 
 ##' @author Bob Douma
 ##' 
