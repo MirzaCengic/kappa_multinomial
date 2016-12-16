@@ -72,17 +72,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div id="this-is-a-brief-tutorial-for-using-kappa_multinomial-a-new-way-to-assess-the-performance-of-multinomial-predictions-for-landcover" class="section level1">
 <h1>This is a brief tutorial for using <span class="math inline">\(\kappa_{multinomial}\)</span>, a new way to assess the performance of multinomial predictions for landcover</h1>
-<p>First install the packages. Here we use the library <code>gtools</code> to generate some data to simulate data for testing purposes.</p>
+<p><span class="math inline">\(\kappa_{multinomial}\)</span> is a metric to assess the performance of multinomial models. Increasingly, land cover models use multinomial models to predict occurence of discrete classes. At present, no suitable mesure exist to evaluate the agreement of such models with observations.</p>
+<p>This package provides a method <span class="math inline">\(\kappa_{multinomial}\)</span> to assess the agreement between multinomial models (i.e. those that predict an occurence probability for classes of outcomes) and observations which have either discrete outcomes or outcomes represented by frequencies.</p>
+<p>We start with an example to illustrate the use of <span class="math inline">\(\kappa_{multinomial}\)</span>. We proceed with some syntethic datasets to get insight in the behaviour of <span class="math inline">\(\kappa_{multinomial}\)</span>. The example shows observed mosaic of vegetation types and predicted probabilities of the four dominant vegetation types (Grassland, Shrubland, Broadleaf forest, and Conifer forest) in the Chaparral in California. The predicted probabilities were fitted simultaneously in a multinomial logistic model, and the probabilities of the four vegetation types in a pixel sum to one. Species composition in this area is partly determined by constant factors (such as topology, soil, and climate), and partly stochastic factors such as fire. For full model specifications we refer to Ackerly, D.D., Cornwell, W.K., Weiss, S.B., Flint, L.E. &amp; Flint, A.L. (2015) A Geographic Mosaic of Climate Change Impacts on Terrestrial Vegetation: Which Areas Are Most at Risk? PLoS ONE, 10, e0130629.</p>
+<p>First install the packages.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;devtools&quot;)</span>
 devtools::<span class="kw">install_github</span>(<span class="st">&quot;bobdouma/kappa_multinomial&quot;</span>)
 <span class="kw">library</span>(multinomialperform)
 <span class="co">#install.packages(&quot;gtools&quot;)</span>
-<span class="kw">library</span>(gtools)</code></pre></div>
-<p><span class="math inline">\(\kappa_{multinomial}\)</span> is a metric to assess the performance of multinomial models. Increasingly, land cover models use multinomial models to predict occurence of discrete classes. At present, no suitable mesure exist to evaluate the agreement of such models with observations.</p>
-<p>This package provides a method <span class="math inline">\(\kappa_{multinomial}\)</span> to assess the agreement between multinomial models (i.e. those that predict an occurence probability for classes of outcomes) and observations which have either discrete outcomes or outcomes represented by frequencies.</p>
-<p>We start with an example to illustrate the use of <span class="math inline">\(\kappa_{multinomial}\)</span>. We proceed with some syntethic datasets to get insight in the behaviour of <span class="math inline">\(\kappa_{multinomial}\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grDevices)
-<span class="kw">load</span>(<span class="st">&quot;obs_mod_brick.Rdata&quot;</span>)
+<span class="kw">library</span>(gtools)
+<span class="kw">library</span>(grDevices)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;obs_mod_brick.Rdata&quot;</span>)
 obs</code></pre></div>
 <pre><code>## class       : RasterLayer 
 ## dimensions  : 290, 322, 93380  (nrow, ncol, ncell)
@@ -120,7 +120,7 @@ pred =<span class="st"> </span><span class="kw">t</span>(<span class="kw">apply<
 obs =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prob_to_binary</span>(pred)) <span class="co"># prob_to_binary transforms probabilities to discrete outcomes, 1 for the most probable class, 0's for the remaining classes </span>
 <span class="kw">kappa_multinomial</span>(<span class="dt">obs=</span>obs,<span class="dt">pred=</span>pred) <span class="co"># calculate kappa</span></code></pre></div>
 <pre><code>##  k_prob     k_loc k_multinomial        po     pe      pmax
-##       1 0.6737748     0.6737748 0.7632258 0.2742 0.7632258</code></pre>
+##       1 0.6338325     0.6338325 0.7314528 0.2666 0.7314528</code></pre>
 </div>
 <div id="case-2-predictions-are-continuous-probabilities-and-observations-discrete" class="section level3">
 <h3>Case 2: Predictions are continuous probabilities and observations discrete</h3>
@@ -130,7 +130,7 @@ pred =<span class="st"> </span><span class="kw">t</span>(<span class="kw">apply<
 obs =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prob_to_binary</span>(pred))
 <span class="kw">kappa_multinomial</span>(<span class="dt">obs=</span>obs,<span class="dt">pred=</span>pred) <span class="co"># calculate kappa</span></code></pre></div>
 <pre><code>##  k_prob     k_loc k_multinomial        po     pe      pmax
-##       1 0.8156408     0.8156408 0.8653071 0.2694 0.8653071</code></pre>
+##       1 0.7992675     0.7992675 0.8508959 0.2572 0.8508959</code></pre>
 </div>
 <div id="case-3-predictions-are-continuous-probabilities-and-observations-discrete" class="section level3">
 <h3>Case 3: Predictions are continuous probabilities and observations discrete</h3>
@@ -140,7 +140,7 @@ resample =<span class="st"> </span><span class="kw">sample</span>(<span class="k
 obs[resample,] =<span class="st"> </span>obs[<span class="kw">sample</span>(resample),] <span class="co"># randomly shuffle 20 observations</span>
 <span class="kw">kappa_multinomial</span>(<span class="dt">obs=</span>obs,<span class="dt">pred=</span>pred) <span class="co"># calculate kappa</span></code></pre></div>
 <pre><code>##     k_prob     k_loc k_multinomial        po     pe      pmax
-##  0.8380364 0.8156408     0.6835367 0.7687919 0.2694 0.8653071</code></pre>
+##  0.7982676 0.7992675     0.6380293 0.7311282 0.2572 0.8508959</code></pre>
 </div>
 <div id="case-4-predictions-are-continuous-probabilities-and-observations-not-discrete" class="section level3">
 <h3>Case 4: Predictions are continuous probabilities and observations not discrete</h3>
@@ -151,7 +151,7 @@ obs =<span class="st"> </span>pred
 <pre><code>## [1] &quot;Observations are not discrete. A randomization procedure is used to calculate pe. Consider adjusting nsim&quot;
 ## ========================================================================================================================</code></pre>
 <pre><code>##  k_prob k_loc k_multinomial po        pe pmax
-##       1     1             1  1 0.4830937    1</code></pre>
+##       1     1             1  1 0.4963882    1</code></pre>
 </div>
 <div id="case-5-observations-not-discrete-and-prediction-frequency-random-relative-to-observed" class="section level3">
 <h3>Case 5: Observations not discrete and prediction frequency random relative to observed</h3>
@@ -161,8 +161,8 @@ obs =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class=
 <span class="kw">kappa_multinomial</span>(<span class="dt">obs=</span>obs,<span class="dt">pred=</span>pred,<span class="dt">nsim=</span><span class="dv">10000</span>) <span class="co"># calculate kappa</span></code></pre></div>
 <pre><code>## [1] &quot;Observations are not discrete. A randomization procedure is used to calculate pe. Consider adjusting nsim&quot;
 ## ========================================================================================================================</code></pre>
-<pre><code>##      k_prob k_loc k_multinomial       po        pe pmax
-##  0.05313713     1    0.05313713 0.374676 0.3395833    1</code></pre>
+<pre><code>##     k_prob k_loc k_multinomial       po        pe pmax
+##  0.1098369     1     0.1098369 0.408366 0.3353645    1</code></pre>
 </div>
 <div id="case-6-observations-not-discrete-and-the-most-likely-class-to-be-observed-is-predicted-with-lower-probability.-however-the-ranking-within-a-sample-remains-the-same." class="section level3">
 <h3>Case 6: Observations not discrete and the most likely class to be observed is predicted with lower probability. However the ranking within a sample remains the same.</h3>
@@ -183,13 +183,13 @@ pred.lower=<span class="st"> </span><span class="kw">increase</span>(pred,<span 
 <span class="kw">kappa_multinomial</span>(<span class="dt">obs=</span>obs,<span class="dt">pred=</span>pred) <span class="co"># calculate kappa</span></code></pre></div>
 <pre><code>## [1] &quot;Observations are not discrete. A randomization procedure is used to calculate pe. Consider adjusting nsim&quot;
 ## ========================================================================================================================</code></pre>
-<pre><code>##  k_prob k_loc k_multinomial po       pe pmax
-##       1     1             1  1 0.479951    1</code></pre>
+<pre><code>##  k_prob k_loc k_multinomial po        pe pmax
+##       1     1             1  1 0.5094966    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappa_multinomial</span>(<span class="dt">obs=</span>obs,<span class="dt">pred=</span>pred.lower) <span class="co"># calculate kappa</span></code></pre></div>
 <pre><code>## [1] &quot;Observations are not discrete. A randomization procedure is used to calculate pe. Consider adjusting nsim&quot;
 ## ========================================================================================================================</code></pre>
-<pre><code>##     k_prob     k_loc k_multinomial    po        pe      pmax
-##  0.9999532 0.8136037     0.8135657 0.903 0.4797095 0.9030198</code></pre>
+<pre><code>##     k_prob     k_loc k_multinomial        po        pe      pmax
+##  0.9968868 0.8077103     0.8051957 0.9043333 0.5089088 0.9055682</code></pre>
 </div>
 </div>
 </div>

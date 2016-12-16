@@ -38,26 +38,25 @@ pred.type = t(apply(pred,1,select_max))
 
 # This is a brief tutorial for using $\kappa_{multinomial}$, a new way to assess the performance of multinomial predictions for landcover
 
-First install the packages.  Here we use the library `gtools` to generate some data to simulate data for testing purposes.
-
-```{r,eval = TRUE}
-#install.packages("devtools")
-devtools::install_github("bobdouma/kappa_multinomial")
-library(multinomialperform)
-#install.packages("gtools")
-library(gtools)
-```
-
 $\kappa_{multinomial}$ is a metric to assess the performance of multinomial models. Increasingly, land cover models use multinomial models to predict occurence of discrete classes. At present, no suitable mesure exist to evaluate the agreement of such models with observations.
 
 This package provides a method $\kappa_{multinomial}$ to assess the agreement between multinomial models (i.e. those that predict an occurence probability for classes of outcomes) and observations which have either discrete outcomes or outcomes represented by frequencies.
 
-We start with an example to illustrate the use of $\kappa_{multinomial}$. We proceed with some syntethic datasets to get insight in the behaviour of $\kappa_{multinomial}$.
+We start with an example to illustrate the use of $\kappa_{multinomial}$. We proceed with some syntethic datasets to get insight in the behaviour of $\kappa_{multinomial}$. The example shows observed mosaic of vegetation types and predicted probabilities of the four dominant vegetation types (Grassland, Shrubland, Broadleaf forest, and Conifer forest) in the Chaparral in California. The predicted probabilities were fitted simultaneously in a multinomial logistic model, and the probabilities of the four vegetation types in a pixel sum to one. Species composition in this area is partly determined by constant factors (such as topology, soil, and climate), and partly stochastic factors such as fire. For full model specifications we refer to Ackerly, D.D., Cornwell, W.K., Weiss, S.B., Flint, L.E. & Flint, A.L. (2015) A Geographic Mosaic of Climate Change Impacts on Terrestrial Vegetation: Which Areas Are Most at Risk? PLoS ONE, 10, e0130629.
 
+First install the packages. 
+
+```{r,eval = TRUE}
+#install.packages("devtools")
+devtools::install_github("bobdouma/kappa_multinomial")
+library(multinomialperform) # for kappa multinomial
+#install.packages("gtools")
+library(gtools) # for data simulations
+library(grDevices) # for color scheme
+```
 
 
 ```{r,eval=TRUE, fig.width=7,fig.height=7}
-library(grDevices)
 load("obs_mod_brick.Rdata")
 obs
 plot(obs,legend=F,col = rev(terrain.colors(4)))
@@ -72,8 +71,6 @@ pred.dat = pred.dat[!is.na(apply(pred.dat,1,sum)),]
 # calculate statistic 
 kappa_multinomial(obs.dat,pred.dat)
 
-
-
 ```
 
 In this example the model does not fit the data very well. $\kappa_{multinomial}$ is very low which is mainly due to the fact that $\kappa_{prob}$ is low. Apparently, the observed classes are not predicted with the highest probability. 
@@ -81,7 +78,6 @@ In this example the model does not fit the data very well. $\kappa_{multinomial}
 
 
 ## Synthetic data
-
 In the simplest case there is a matrix (or data frame) of predictions and a data frame of observations.  Both of these can either be binary or continuous probablities.  But all cells of both matrixes must be $0<=y_{i}<=1$.  The columns of both matrices correspond to $q$ land cover classes.  Each row is a sample $i$. Further for the modelled class probabilities and the class observations it should hold that $\sum_{k=1}^q y_{ik} =1$ and  $\sum_{k=1}^m p_{ik} = 1$.Not that one of the advances of this approach is that uncertainty in the observations can be represented.  The order of the rows for the land cover classes in the observed and predicted matrices should correspond exactly.    
 
 $\kappa_{multinomial}$ can be calculated as the product of $\kappa_{loc} * \kappa_{prob} = \frac{p_{0 multinomial} - p_{e multinomial}}{p_{max}-p_{e multinomial}} * \frac{p_{max} - p_{e multinomial}}{1-p_{e multinomial}}$ 
