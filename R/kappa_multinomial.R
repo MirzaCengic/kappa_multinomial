@@ -41,10 +41,14 @@
 # kappa calculation
 kappa_multinomial<-function(obs, pred,nsim=1000){
   # do checks
-  if (!is.data.frame(obs)&!is.matrix(obs)){stop("observations not in a dataframe")}  
-  if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames of unequal size")}
+  if (!is.data.frame(obs)& !is.matrix(obs)){stop("observations not in a dataframe or matrix")}  
+  if (!is.data.frame(pred)& !is.matrix(pred)){stop("predictions not in a dataframe or matrix")}  
+  if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames or matrices of unequal size")}
   if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums of predictions not equal to one")}
   if (sum(apply(obs,1,sum)) != nrow(obs)){stop("rowsums of observations not equal to one")}
+  if (max(pred)>1 | min(pred)<0){stop("do values represent probabilities: values found in pred thtat are below 0 or above 1")} 
+  if (max(obs)>1 | min(obs)<0){stop("do values represent probabilities: values found in obs thtat are below 0 or above 1")} 
+  # do calculations  
   x = kappa_multinomial_stats(obs=obs,pred=pred)
   po = x["po"]      # observed agreement; Eq. 7
   pe = pe(obs,nsim)      # null model obtained through randomization or through the analytical; Eq. 9

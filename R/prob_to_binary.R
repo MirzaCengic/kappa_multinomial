@@ -3,7 +3,7 @@
 ##'   
 ##' @title prob_to_binary
 ##' 
-##' @description This function transform probabilties to presence/absence, by assuming that the class with highest sample probability if present and the others classes are absent
+##' @description This function transform probabilties to presence/absence, by assuming that the class with highest sample probability is present and the others classes are absent
 ##' 
 ##' 
 ##' @param pred a data.frame with class predictions n columns and m rows; each rows represents a sample, the columns represent the classes of outcomes. 
@@ -13,10 +13,8 @@
 ##' \itemize{
 ##' \item{pred}
 ##' }
-
-##' @export
 ##' 
-##' @details helper function for the tutorial
+##' @details helper function for the tutorial. This function tansforms probabilities to presence/absence, but assuming that the class that occurs with highest probability is present (1), and the others are absent (0). If multiple classes are predicted with the same maximum probability one class is chosen randomly.
 ##' 
 ##' @author Bob Douma
 ##' 
@@ -24,9 +22,10 @@
 ##' NULL
 ##' @seealso 
 ##' NULL
+##' @export
 ##' 
 ##' @examples 
-##' generate multinomial probabilties with four classes
+##' # generate multinomial probabilties with four classes
 ##' pred <- gtools::rdirichlet(100, c(0.1,0.1,0.5,0.5)) 
 ##' pred_discrete <- prob_to_binary(pred)
 ##' obs <- t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
