@@ -21,8 +21,8 @@
 ##' @export 
 ##' 
 ##' @details 'obs' and 'pred' should contain probabilities or discrete outcomes (0,1). 
-##'  
-##' The null model is calculated analytically when observations are discrete and calculated by randomzation otherwise.
+##' ##' The null model is calculated analytically when observations are discrete and calculated by randomzation otherwise.
+##' 
 ##' @author Bob Douma
 ##' 
 ##' @references 
