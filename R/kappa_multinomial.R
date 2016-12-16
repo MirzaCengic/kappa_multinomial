@@ -20,7 +20,9 @@
 ##' 
 ##' @export 
 ##' 
-##' @details The null model is calculated analytically if possible, and calculated by randomzation otherwise.
+##' @details 'obs' and 'pred' should contain probabilities or discrete outcomes (0,1). 
+##'  
+##' The null model is calculated analytically when observations are discrete and calculated by randomzation otherwise.
 ##' @author Bob Douma
 ##' 
 ##' @references 
@@ -46,8 +48,8 @@ kappa_multinomial<-function(obs, pred,nsim=1000){
   if (!(dim(pred)[1] == dim(obs)[1] & dim(pred)[2] == dim(obs)[2])){stop("data.frames or matrices of unequal size")}
   if (sum(apply(pred,1,sum)) != nrow(pred)){stop("rowsums of predictions not equal to one")}
   if (sum(apply(obs,1,sum)) != nrow(obs)){stop("rowsums of observations not equal to one")}
-  if (max(pred)>1 | min(pred)<0){stop("do values represent probabilities: values found in pred thtat are below 0 or above 1")} 
-  if (max(obs)>1 | min(obs)<0){stop("do values represent probabilities: values found in obs thtat are below 0 or above 1")} 
+  if (max(pred)>1 | min(pred)<0){stop("do values represent probabilities? values found in pred thtat are below 0 or above 1")} 
+  if (max(obs)>1 | min(obs)<0){stop("do values represent probabilities? values found in obs thtat are below 0 or above 1")} 
   # do calculations  
   x = kappa_multinomial_stats(obs=obs,pred=pred)
   po = x["po"]      # observed agreement; Eq. 7
