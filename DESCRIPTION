@@ -12,7 +12,8 @@ Depends:
 License: MIT + file LICENSE
 LazyData: true
 import: 
-	utils
+		utils
 Suggests:
-    testthat,gtools
+    testthat,gtools, knitr, rmarkdown
+VignetteBuilder: knitr
 RoxygenNote: 5.0.1
