@@ -12,8 +12,7 @@ Depends:
 License: MIT + file LICENSE
 LazyData: true
 import: 
+	utils
 Suggests:
-    pROC,
-    testthat,
-    gtools
+    testthat,gtools
 RoxygenNote: 5.0.1

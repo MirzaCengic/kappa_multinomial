@@ -2,3 +2,5 @@
 
 export(kappa_multinomial)
 export(prob_to_binary)
+importFrom(utils,setTxtProgressBar)
+importFrom(utils,txtProgressBar)
