@@ -58,7 +58,7 @@ We start with an example to illustrate the use of $\kappa_{multinomial}$. We pro
 
 ```{r,eval=TRUE}
 
-load("D:/BobDouma/Paper_vegtype_validation/obs_mod_brick.Rdata")
+load("obs_mod_brick.Rdata")
 
 plot(obs,legend=F,col = rev(terrain.colors(4)))
 legend("topright", legend = c("Grassland", "Coniferous Forest", "Broadleaf Forest", "Shrubland"), fill = rev(terrain.colors(4)))
