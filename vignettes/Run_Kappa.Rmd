@@ -48,6 +48,32 @@ library(multinomialperform)
 library(gtools)
 ```
 
+$\kappa_{multinomial}$ is a metric to assess the performance of multinomial models. Increasingly, land cover models use multinomial models to predict occurence of discrete classes. At present, no suitable mesure exist to evaluate the agreement of such models with observations.
+
+This package provides a method $k_multinomial$ to assess the agreement between multinomial models (i.e. those that predict an occurence probability for classes of outcomes) and observations which have either discrete outcomes or outcomes represented by frequencies.
+
+We start with an example to illustrate the use of $k_multinomial$. We proceed with some syntethic datasets to get insight in the behaviour of $k_multinomial$.
+
+```{r}
+
+load("D:/BobDouma/Paper_vegtype_validation/obs_mod_brick.Rdata")
+
+plot(obs,legend=F,col = rev(terrain.colors(4)))
+legend("topright", legend = c("Grassland", "Coniferous Forest", "Broadleaf Forest", "Shrubland"), fill = rev(terrain.colors(4)))
+plot(vmap)
+
+library(multinomialperform)
+
+pred.dat = values(vmap)
+obs.dat = values(obs.map)
+
+
+kappa_multinomial(obs.dat,pred.dat)
+
+
+
+```
+
 
 In the simplest case there is a matrix (or data frame) of predictions and a data frame of observations.  Both of these can either be binary or continuous probablities.  But all cells of both matrixes must be $0<=y_{i}<=1$.  The columns of both matrices correspond to $q$ land cover classes.  Each row is a sample $i$. Further for the modelled class probabilities and the class observations it should hold that $\sum_{k=1}^q y_{ik} =1$ and  $\sum_{k=1}^m p_{ik} = 1$.Not that one of the advances of this approach is that uncertainty in the observations can be represented.  The order of the rows for the land cover classes in the observed and predicted matrices should correspond exactly.    
 

@@ -44,6 +44,7 @@
 ##' 
 
 
+
 # kappa calculation
 kappa_multinomial<-function(obs, pred,nsim=1000){
   # do checks

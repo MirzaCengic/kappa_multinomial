@@ -7,9 +7,7 @@ pe = function(obs,nsim=1000){
   if (length(which(obs ==1 | obs ==0)) == (nrow(obs)*ncol(obs))){
     # analytical procedure
     glob.means = apply(obs,2,mean)
-    mean.null = data.frame(matrix(NA,nrow=(nrow(obs)),ncol=ncol(obs)))
-    for (i in 1:nrow(mean.null)){mean.null[i,] = glob.means}  
-    
+    mean.null = data.frame(matrix(glob.means,nrow=(nrow(obs)),ncol=ncol(obs),byrow = T))
     abs.diff = abs(mean.null - obs)
     po.eq9 = sum(1-apply(abs.diff,1,sum)/2)/nrow(obs) # calculated according to equation 9 in paper
     pe = po.eq9
