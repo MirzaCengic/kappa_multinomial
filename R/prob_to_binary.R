@@ -14,7 +14,6 @@
 ##' \item{pred}
 ##' }
 ##' 
-##' @export
 ##' 
 ##' @details helper function for the tutorial
 ##' 
@@ -24,9 +23,10 @@
 ##' NULL
 ##' @seealso 
 ##' NULL
+##' @export
 ##' 
 ##' @examples 
-##' generate multinomial probabilties with four classes
+##' # generate multinomial probabilties with four classes
 ##' pred <- gtools::rdirichlet(100, c(0.1,0.1,0.5,0.5)) 
 ##' pred_discrete <- multinomialperform:::prob_to_binary(pred)
 ##' obs <- t(apply(pred,1,rmultinom,size=1,n=1)) # generate multinomial observations with four classes
