@@ -29,7 +29,9 @@ A kappa-like measure for multinomial models
 }
 \details{
 kappa_multinomial is caclulated from two components: kappa_loc and kappa_prob. For details see Douma et al 2017.  
-obs and pred should contain probabilities or discrete outcomes (0,1). 
+
+obs and pred should contain probabilities or discrete outcomes (0 or 1). 
+
 The null model is calculated analytically when observations are discrete and calculated by randomzation otherwise.
 }
 \examples{
@@ -43,5 +45,11 @@ kappa_multinomial(obs=obs,pred=pred)
 }
 \author{
 Bob Douma
+}
+\references{
+Douma et al 2017 Journal of Biogeography
+}
+\seealso{
+\code{\link{cohen.kappa}} for Cohen's Kappa
 }
 
