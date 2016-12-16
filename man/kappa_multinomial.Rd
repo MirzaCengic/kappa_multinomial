@@ -28,7 +28,9 @@ returns a list with the following elements:
 A kappa-like measure for multinomial models
 }
 \details{
-The null model is calculated analytically if possible, and calculated by randomzation otherwise.
+kappa_multinomial is caclulated from two components: kappa_loc and kappa_prob. For details see Douma et al 2017.  
+obs and pred should contain probabilities or discrete outcomes (0,1). 
+The null model is calculated analytically when observations are discrete and calculated by randomzation otherwise.
 }
 \examples{
 # generate multinomial probabilties with four classes

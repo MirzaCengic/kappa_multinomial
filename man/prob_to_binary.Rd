@@ -17,10 +17,10 @@ returns a list with the following elements:
 }
 }
 \description{
-This function transform probabilties to presence/absence, by assuming that the class with highest sample probability if present and the others classes are absent
+This function transform probabilties to presence/absence, by assuming that the class with highest sample probability is present and the others classes are absent
 }
 \details{
-helper function for the tutorial
+helper function for the tutorial. This function tansforms probabilities to presence/absence, but assuming that the class that occurs with highest probability is present (1), and the others are absent (0). If multiple classes are predicted with the same maximum probability one class is chosen randomly.
 }
 \examples{
 # generate multinomial probabilties with four classes
